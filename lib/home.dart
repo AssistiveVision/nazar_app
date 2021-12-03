@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nazar_capstone/eyemode.dart';
 import 'package:nazar_capstone/register.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:nazar_capstone/facemode.dart';
 
 class Home extends StatefulWidget {
   final Details details;
@@ -111,7 +112,13 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: (){
-
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context){
+                                return Eyemode();
+                              }
+                          )
+                      );
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
@@ -165,6 +172,13 @@ class _HomeState extends State<Home> {
                   ),
                   GestureDetector(
                     onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context){
+                                return Facemode();
+                              }
+                          )
+                      );
 
                     },
                     child: Padding(
