@@ -2,7 +2,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nazar_capstone/main.dart';
 import 'package:nazar_capstone/object.dart';
 import 'package:nazar_capstone/ocr.dart';
 
@@ -11,15 +10,13 @@ class Eyemode extends StatefulWidget {
   final String url;
   Eyemode({Key? key, required this.url}) : super(key: key);
 
-  //Eyemode(this.url);
-
   @override
   _EyemodeState createState() => _EyemodeState();
 }
 
 class _EyemodeState extends State<Eyemode> {
   late List<CameraDescription> cameras;
-  //String ip=widget.url;
+
   @override
   void initState(){
     // TODO: implement initState
