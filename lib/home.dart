@@ -1,3 +1,6 @@
+import 'package:nazar_capstone/object.dart';
+import 'package:nazar_capstone/ocr.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,7 +8,9 @@ import 'package:nazar_capstone/eyemode.dart';
 import 'package:nazar_capstone/register.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nazar_capstone/facemode.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+import 'face.dart';
+
 
 class Home extends StatefulWidget {
   final Details details;
@@ -19,6 +24,157 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String name = " ";
+  String url = details.key;
+  SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _lastWords = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _initSpeech();
+    getPref();
+
+  }
+
+  /// This has to happen only once per app
+  void _initSpeech() async {
+    print("hello");
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  /// Each time to start a speech recognition session
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    print("22");
+    command();
+    setState(() {});
+  }
+
+  /// Manually stop the active speech recognition session
+  /// Note that there are also timeouts that each platform enforces
+  /// and the SpeechToText plugin supports setting timeouts on the
+  /// listen method.
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
+  }
+
+  /// This is the callback that the SpeechToText plugin calls when
+  /// the platform returns recognized words.
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _lastWords = result.recognizedWords;
+    });
+  }
+
+  void command(){
+    switch(_lastWords.toLowerCase()) {
+      case 'i mode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return ObjectDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'imode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return ObjectDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'eyemode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return ObjectDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'eye mode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return ObjectDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'text reader': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return TextReader(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'textreader': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return TextReader(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'face mode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return FaceDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      case 'facemode': {
+        // statements;
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context){
+                  return FaceDetect(u: url);
+                }
+            )
+        );
+      }
+      break;
+
+      default: {
+        //statements;
+        print('Not Valid Arguments');
+      }
+      break;
+    }
+  }
 
   getPref() async {
     Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -26,14 +182,9 @@ class _HomeState extends State<Home> {
     setState(() {
       name =  (prefs.getString('names')??'');
     });
+  }
 
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getPref();
-  }
+
 
   @override
   Widget build(BuildContext context){
@@ -115,7 +266,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(context,
                           MaterialPageRoute(
                               builder: (context){
-                                return Eyemode();
+                                return Eyemode(url: url);
                               }
                           )
                       );
@@ -175,7 +326,7 @@ class _HomeState extends State<Home> {
                       Navigator.push(context,
                           MaterialPageRoute(
                               builder: (context){
-                                return Facemode();
+                                return FaceDetect(u: url,);
                               }
                           )
                       );
@@ -284,6 +435,15 @@ class _HomeState extends State<Home> {
                 ],
               ),
             )
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed:
+          // If not yet listening for speech start, otherwise stop
+          _speechToText.isNotListening ? _startListening : _stopListening,
+          // If not yet listening for speech start, otherwise stop
+
+          tooltip: 'Listen',
+          child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
         ),
       ),
     );

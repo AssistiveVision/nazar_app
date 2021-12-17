@@ -29,10 +29,18 @@ dependencies:
   google_fonts: ^1.1.1
   animated_text_kit: ^4.2.1
   flutter_svg: ^0.23.0+1
-  shared_preferences: ^2.0.6
-  image_picker: ^0.6.7
-  tflite: ^1.1.1
-  camera: ^0.5.8+7
+  shared_preferences: ^2.0.0
+
+  image: ^3.1.0
+  http: ^0.12.0+2
+  flutter_tts: ^3.2.2
+  tflite_flutter: ^0.9.0
+  google_ml_kit: ^0.5.0
+  flutter_tesseract_ocr: ^0.4.18
+  tflite_flutter_helper: ^0.3.0
+  dio: ^3.0.10
+  speech_to_text: ^4.2.2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -55,12 +63,14 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/detect.tflite
+    - assets/labelmap.txt
+    - assets/mobilefacenet.tflite
     - images/
   #   - images/a_dot_ham.jpeg
-    - models/ssd_mobilenet.tflite
-    - models/labels.txt
-    - models/face_model.tflite
-    - models/labels2.txt
+
+    - assets/
+    - assets/tessdata/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

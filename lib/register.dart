@@ -174,7 +174,7 @@ class _RegisterState extends State<Register> {
                                 decoration: InputDecoration(
 
                                     prefixIcon: Icon(Icons.vpn_key_rounded),
-                                  hintText: 'Enter Product key',
+                                  hintText: 'Enter IP',
                                     hintStyle: GoogleFonts.alatsi(
                                         fontWeight: FontWeight.bold
                                     ),

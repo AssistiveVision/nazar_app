@@ -2,12 +2,16 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nazar_capstone/live_detect.dart';
 import 'package:nazar_capstone/main.dart';
+import 'package:nazar_capstone/object.dart';
+import 'package:nazar_capstone/ocr.dart';
 
 
 class Eyemode extends StatefulWidget {
-  //const Eyemode({Key key}) : super(key: key);
+  final String url;
+  Eyemode({Key? key, required this.url}) : super(key: key);
+
+  //Eyemode(this.url);
 
   @override
   _EyemodeState createState() => _EyemodeState();
@@ -15,6 +19,7 @@ class Eyemode extends StatefulWidget {
 
 class _EyemodeState extends State<Eyemode> {
   late List<CameraDescription> cameras;
+  //String ip=widget.url;
   @override
   void initState(){
     // TODO: implement initState
@@ -46,10 +51,11 @@ class _EyemodeState extends State<Eyemode> {
                 children: [
                   GestureDetector(
                     onTap: (){
+
                       Navigator.push(context,
                           MaterialPageRoute(
                               builder: (context){
-                                return LiveFeed(cameras);
+                                return ObjectDetect(u: widget.url);
                               }
                           )
                       );
@@ -106,6 +112,13 @@ class _EyemodeState extends State<Eyemode> {
                   ),
                   GestureDetector(
                     onTap: (){
+                      Navigator.push(context,
+                          MaterialPageRoute(
+                              builder: (context){
+                                return TextReader(u: widget.url);
+                              }
+                          )
+                      );
 
                     },
                     child: Padding(
@@ -127,7 +140,7 @@ class _EyemodeState extends State<Eyemode> {
                                 Container(
 
                                   child: Text(
-                                    "Text to Speech",
+                                    "Text Reader",
                                     style: GoogleFonts.jockeyOne(
                                       fontSize: 30,
                                     ),
